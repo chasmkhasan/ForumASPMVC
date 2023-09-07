@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ForumASPMVC.Migrations
 {
-    public partial class initial : Migration
+    public partial class RezMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,9 +15,9 @@ namespace ForumASPMVC.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<int>(type: "int", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -25,7 +25,7 @@ namespace ForumASPMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ThreadOne",
+                name: "ThreadOnes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -37,9 +37,9 @@ namespace ForumASPMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ThreadOne", x => x.Id);
+                    table.PrimaryKey("PK_ThreadOnes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ThreadOne_Topics_TopicId",
+                        name: "FK_ThreadOnes_Topics_TopicId",
                         column: x => x.TopicId,
                         principalTable: "Topics",
                         principalColumn: "Id",
@@ -47,7 +47,7 @@ namespace ForumASPMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comment",
+                name: "Comments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -59,16 +59,16 @@ namespace ForumASPMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comment", x => x.Id);
+                    table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comment_ThreadOne_ThreadOneId",
+                        name: "FK_Comments_ThreadOnes_ThreadOneId",
                         column: x => x.ThreadOneId,
-                        principalTable: "ThreadOne",
+                        principalTable: "ThreadOnes",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reply",
+                name: "Replies",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -80,40 +80,40 @@ namespace ForumASPMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reply", x => x.Id);
+                    table.PrimaryKey("PK_Replies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reply_Comment_CommentId",
+                        name: "FK_Replies_Comments_CommentId",
                         column: x => x.CommentId,
-                        principalTable: "Comment",
+                        principalTable: "Comments",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_ThreadOneId",
-                table: "Comment",
+                name: "IX_Comments_ThreadOneId",
+                table: "Comments",
                 column: "ThreadOneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reply_CommentId",
-                table: "Reply",
+                name: "IX_Replies_CommentId",
+                table: "Replies",
                 column: "CommentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ThreadOne_TopicId",
-                table: "ThreadOne",
+                name: "IX_ThreadOnes_TopicId",
+                table: "ThreadOnes",
                 column: "TopicId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Reply");
+                name: "Replies");
 
             migrationBuilder.DropTable(
-                name: "Comment");
+                name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "ThreadOne");
+                name: "ThreadOnes");
 
             migrationBuilder.DropTable(
                 name: "Topics");

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForumASPMVC.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    [Migration("20230907074354_initialMigration3")]
-    partial class initialMigration3
+    [Migration("20230907184841_RezMig")]
+    partial class RezMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -117,7 +117,7 @@ namespace ForumASPMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime?>("Created")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
