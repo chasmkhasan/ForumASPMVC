@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ForumASPMVC.Data;
 using ForumASPMVC.Models;
+using ForumASPMVC.Models.ViewModels;
 
 namespace ForumASPMVC.Controllers
 {
@@ -56,15 +57,22 @@ namespace ForumASPMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Created")] Topic topic)
+        public async Task<IActionResult> Create(CreateTopicViewModel viewModelTopic)
         {
             if (ModelState.IsValid)
             {
+                Topic topic = new Topic()
+                {
+                    Title = viewModelTopic.Title,
+                    Description = viewModelTopic.Description,
+                    Created = DateTime.Now,
+                };
+
                 _context.Add(topic);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(topic);
+            return View(viewModelTopic);
         }
 
         // GET: Topics/Edit/5
