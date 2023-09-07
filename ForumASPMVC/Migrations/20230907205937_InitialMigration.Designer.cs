@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForumASPMVC.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    [Migration("20230907184841_RezMig")]
-    partial class RezMig
+    [Migration("20230907205937_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
