@@ -34,7 +34,6 @@ namespace ForumASPMVC.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure relationships here using Fluent API
             modelBuilder.Entity<ThreadOne>()
                 .HasOne(t => t.Topic)
                 .WithMany(t => t.Threads)
