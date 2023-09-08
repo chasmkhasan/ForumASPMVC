@@ -23,9 +23,24 @@ namespace ForumASPMVC.Controllers
         // GET: Topics
         public async Task<IActionResult> Index()
         {
-              return _context.Topics != null ? 
-                          View(await _context.Topics.ToListAsync()) :
-                          Problem("Entity set 'ForumDbContext.Topics'  is null.");
+            List<Topic> topics = _context.Topics != null ? await _context.Topics.ToListAsync() : null;
+
+
+
+            //Problem("Entity set 'ForumDbContext.Topics'  is null.");
+
+
+            List<ListTopicViewModel> topicList =new List<ListTopicViewModel>();
+
+
+            foreach (var item in topics)
+            {
+                var viewModelTopic = new ListTopicViewModel() { Id = item.Id, Title = item.Title, Description = item.Description, Created= item.Created };
+
+                topicList.Add(viewModelTopic);
+            }
+
+            return View(topicList);
         }
 
         // GET: Topics/Details/5
