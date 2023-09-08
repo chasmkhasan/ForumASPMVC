@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ForumASPMVC.Data;
 using ForumASPMVC.Models;
+using ForumASPMVC.Models.ViewModels;
 
 namespace ForumASPMVC.Controllers
 {
@@ -22,9 +23,24 @@ namespace ForumASPMVC.Controllers
         // GET: Topics
         public async Task<IActionResult> Index()
         {
-              return _context.Topics != null ? 
-                          View(await _context.Topics.ToListAsync()) :
-                          Problem("Entity set 'ForumDbContext.Topics'  is null.");
+            List<Topic> topics = _context.Topics != null ? await _context.Topics.ToListAsync() : null;
+
+
+
+            //Problem("Entity set 'ForumDbContext.Topics'  is null.");
+
+
+            List<ListTopicViewModel> topicList =new List<ListTopicViewModel>();
+
+
+            foreach (var item in topics)
+            {
+                var viewModelTopic = new ListTopicViewModel() { Id = item.Id, Title = item.Title, Description = item.Description, Created= item.Created };
+
+                topicList.Add(viewModelTopic);
+            }
+
+            return View(topicList);
         }
 
         // GET: Topics/Details/5
@@ -56,15 +72,22 @@ namespace ForumASPMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Created")] Topic topic)
+        public async Task<IActionResult> Create(CreateTopicViewModel viewModelTopic)
         {
             if (ModelState.IsValid)
             {
+                Topic topic = new Topic()
+                {
+                    Title = viewModelTopic.Title,
+                    Description = viewModelTopic.Description,
+                    Created = DateTime.Now,
+                };
+
                 _context.Add(topic);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(topic);
+            return View(viewModelTopic);
         }
 
         // GET: Topics/Edit/5
