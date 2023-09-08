@@ -85,7 +85,7 @@ namespace ForumASPMVC.Controllers
 
                 _context.Add(topic);
                 await _context.SaveChangesAsync();
-                TempData["succcess"] = "Topic created successfully";
+                TempData["success"] = "Topic created successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View(viewModelTopic);
@@ -125,7 +125,7 @@ namespace ForumASPMVC.Controllers
                 {
                     _context.Update(topic);
                     await _context.SaveChangesAsync();
-                    TempData["succcess"] = "Topic updated successfully";
+                    TempData["success"] = "Topic updated successfully";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -177,7 +177,7 @@ namespace ForumASPMVC.Controllers
             }
             
             await _context.SaveChangesAsync();
-            TempData["succcess"] = "Topic deleted successfully";
+            TempData["success"] = "Topic deleted successfully";
             return RedirectToAction(nameof(Index));
         }
 
