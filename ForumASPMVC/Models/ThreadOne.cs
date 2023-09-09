@@ -15,6 +15,6 @@ namespace ForumASPMVC.Models
         public int TopicId { get; set; } // Required foreign key property
 
         public Topic Topic { get; set; } // Required reference navigation to principal
-        public List<Comment> Comments { get; set; }
+        public List<Comment>? Comments { get; set; }
     }
 }

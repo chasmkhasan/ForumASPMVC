@@ -1,4 +1,4 @@
-﻿@model ForumASPMVC.Models.Topic
+﻿@model ForumASPMVC.Models.ViewModels.DetailsTopicViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -34,3 +34,51 @@
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+@if (Model.Threads != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Threads.FirstOrDefault().Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Threads.FirstOrDefault().Text)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Threads.FirstOrDefault().Created)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Threads)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Text)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Created)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+   
+}else
+{
+        <h3>There is no thread available for this topic</h3>
+}
+
+

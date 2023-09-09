@@ -52,13 +52,26 @@ namespace ForumASPMVC.Controllers
             }
 
             var topic = await _context.Topics
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Where(m => m.Id == id).Include(t=>t.Threads).FirstOrDefaultAsync();
             if (topic == null)
             {
                 return NotFound();
             }
 
-            return View(topic);
+            DetailsTopicViewModel detailsTopic = new DetailsTopicViewModel() {
+                Id = topic.Id,
+                Title = topic.Title,
+                Description = topic.Description,
+                Created = topic.Created,
+                Threads = new List<ThreadOne>()
+            };
+
+            foreach (var item in topic.Threads)
+            {
+                detailsTopic.Threads.Add(item);
+            }
+
+            return View(detailsTopic);
         }
 
         // GET: Topics/Create
