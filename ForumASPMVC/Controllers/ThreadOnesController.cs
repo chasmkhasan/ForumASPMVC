@@ -72,7 +72,7 @@ namespace ForumASPMVC.Controllers
                 };
                 _context.Add(threadOne);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Topics",  new { id = threadOne.TopicId});
             }
             ViewData["TopicId"] = new SelectList(_context.Topics, "Id", "Id", createThreadOneViewModel.TopicId);
             return View(createThreadOneViewModel);
