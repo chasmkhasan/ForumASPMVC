@@ -34,7 +34,6 @@ namespace ForumASPMVC.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Text")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ThreadOneId")
@@ -71,9 +70,14 @@ namespace ForumASPMVC.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TopicId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CommentId");
+
+                    b.HasIndex("TopicId");
 
                     b.ToTable("Replies");
                 });
@@ -146,6 +150,10 @@ namespace ForumASPMVC.Migrations
                         .WithMany("Replies")
                         .HasForeignKey("CommentId");
 
+                    b.HasOne("ForumASPMVC.Models.Topic", null)
+                        .WithMany("Replies")
+                        .HasForeignKey("TopicId");
+
                     b.Navigation("Comment");
                 });
 
@@ -172,6 +180,8 @@ namespace ForumASPMVC.Migrations
 
             modelBuilder.Entity("ForumASPMVC.Models.Topic", b =>
                 {
+                    b.Navigation("Replies");
+
                     b.Navigation("Threads");
                 });
 #pragma warning restore 612, 618

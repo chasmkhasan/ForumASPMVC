@@ -32,16 +32,19 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to List</a> |
+    <a asp-controller="ThreadOnes" asp-action="Create">
+        Create New Thread
+    </a>
 </div>
 
 
-<div class="col-6 text-end">
+@*<div class="col-6 text-end">
     <a asp-controller="ThreadOnes" asp-action="Create" class="btn btn-primary">
         <i class="bi bi-plus-square-dotted"></i> &nbsp; Create New Thread
     </a>
 
-</div>
+</div>*@
 
 
 @if (Model.Threads != null)
@@ -77,7 +80,9 @@
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                        <a asp-action="Create" asp-controller="Comments" asp-route-id="@item.Id">Reply</a> |
+                        <a asp-action="Comment" asp-route-id="@item.Id">Comment</a>
                     </td>
                 </tr>
             }

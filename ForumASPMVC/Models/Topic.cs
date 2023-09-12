@@ -15,5 +15,6 @@ namespace ForumASPMVC.Models
         public DateTime? Created { get; set; } 
 
         public List<ThreadOne>? Threads { get; set; }
+        public List<Reply>? Replies { get; set; }
     }
 }

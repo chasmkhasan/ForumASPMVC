@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ForumASPMVC.Models.ThreadOne>
+﻿@model IEnumerable<ForumASPMVC.Models.Comment>
 
 @{
     ViewData["Title"] = "Index";
@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.Created)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Topic)
+                @Html.DisplayNameFor(model => model.Thread)
             </th>
             <th></th>
         </tr>
@@ -40,14 +40,12 @@
                 @Html.DisplayFor(modelItem => item.Created)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Topic.Id)
+                @Html.DisplayFor(modelItem => item.Thread.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Reply</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Comment</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
