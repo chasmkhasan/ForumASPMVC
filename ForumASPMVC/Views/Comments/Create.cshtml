@@ -1,4 +1,4 @@
-﻿@model ForumASPMVC.Models.Comment
+﻿@model ForumASPMVC.Models.ViewModels.CreateCommentViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -18,14 +18,9 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Text" class="control-label"></label>
-                <input asp-for="Text" class="form-control" />
-                <span asp-validation-for="Text" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
+                @Html.LabelFor(model => model.Text, new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.Text, new { @class = "form-control", @cols = "100", @rows =  "8", @style="width:100%;"})
+                @Html.ValidationMessageFor(model => model.Text)
             </div>
             <div class="form-group">
                 <label asp-for="ThreadOneId" class="control-label"></label>

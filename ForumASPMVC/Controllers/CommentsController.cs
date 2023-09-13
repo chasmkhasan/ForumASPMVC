@@ -64,6 +64,7 @@ namespace ForumASPMVC.Controllers
             {
                 Comment comment = new Comment
                 {
+                    Title = createCommentViewModel.Title,
                     Text = createCommentViewModel.Text,
                     ThreadOneId = createCommentViewModel.ThreadOneId,
                     Created = DateTime.Now,

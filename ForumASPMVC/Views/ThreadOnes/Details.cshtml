@@ -4,10 +4,62 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+
+
+<style>
+
+    .comments-area {
+        background: #f1f9ff;
+        padding: 50px 30px;
+        margin-top: 50px;
+    }
+
+    .comments-area h4 {
+        text-align: center;
+        margin-bottom: 50px;
+        color: #002347;
+        font-size: 18px;
+    }
+
+    .comments-area h5 {
+        font-size: 16px;
+        margin-bottom: 0px;
+    }
+
+    .comments-area a {
+        color: #002347;
+    }
+
+    .comments-area .comment-list {
+        padding-bottom: 30px;
+    }
+
+        .comments-area .comment-list:last-child {
+            padding-bottom: 0px;
+        }
+
+        .comments-area .comment-list.left-padding {
+            padding-left: 25px;
+        }
+
+    .comments-area .thumb {
+        margin-right: 20px;
+    }
+
+    .comments-area .date {
+        font-size: 13px;
+        color: #777777;
+        margin-bottom: 13px;
+    }
+
+    .comments-area .comment {
+        color: #777777;
+        margin-bottom: 0px;
+    }
+
+</style>
 
 <div>
-    <h4>ThreadOne</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -28,15 +80,43 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Created)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Topic)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Topic.Id)
-        </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
+@if (Model.Comments.Count()>0)
+{
+    <h6>@Model.Comments.Count() comments</h6>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="comments-area">
+                @foreach (var item in Model.Comments)
+                {   
+                    <div class="comment-list">
+                        <div class="single-comment justify-content-between d-flex">
+                            <div class="user justify-content-between d-flex">
+                                <div class="thumb">
+                                    <i class="fa fa-comment" style="font-size:30px; width:30px;"></i>
+                                </div>
+                                <div class="desc">
+                                <h5>@Html.DisplayFor(modelItem => item.Title)</h5>
+                                    <p class="date">@Html.DisplayFor(modelItem => item.Created) </p>
+                                    <p class="comment">
+                                        @Html.DisplayFor(modelItem => item.Text)
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="reply-btn">
+                                <a href="" class="btn-reply text-uppercase">reply</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h6>There is no comment available for this topic</h6>
+}

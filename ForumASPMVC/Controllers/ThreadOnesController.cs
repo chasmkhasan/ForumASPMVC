@@ -36,14 +36,14 @@ namespace ForumASPMVC.Controllers
             }
 
             var threadOne = await _context.ThreadOnes
-                .Include(t => t.Topic)
+                .Include(t => t.Comments)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (threadOne == null)
             {
                 return NotFound();
             }
 
-            return View(threadOne);
+            return PartialView("Details", threadOne);
         }
 
         // GET: ThreadOnes/Create
