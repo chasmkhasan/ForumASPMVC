@@ -52,7 +52,7 @@ namespace ForumASPMVC.Controllers
             }
 
             var topic = await _context.Topics
-                .Where(m => m.Id == id).Include(t=>t.Threads).FirstOrDefaultAsync();
+                .Where(m => m.Id == id).Include(t=>t.Threads).ThenInclude(c=>c.Comments).ThenInclude(r=>r.Replies).FirstOrDefaultAsync();
             if (topic == null)
             {
                 return NotFound();
@@ -156,43 +156,6 @@ namespace ForumASPMVC.Controllers
             return View(topic);
         }
 
-        // GET: Topics/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Topics == null)
-            {
-                return NotFound();
-            }
-
-            var topic = await _context.Topics
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (topic == null)
-            {
-                return NotFound();
-            }
-
-            return View(topic);
-        }
-
-        // POST: Topics/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Topics == null)
-            {
-                return Problem("Entity set 'ForumDbContext.Topics'  is null.");
-            }
-            var topic = await _context.Topics.FindAsync(id);
-            if (topic != null)
-            {
-                _context.Topics.Remove(topic);
-            }
-            
-            await _context.SaveChangesAsync();
-            TempData["success"] = "Topic deleted successfully";
-            return RedirectToAction(nameof(Index));
-        }
 
         private bool TopicExists(int id)
         {

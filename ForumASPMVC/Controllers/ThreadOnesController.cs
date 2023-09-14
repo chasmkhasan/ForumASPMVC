@@ -130,44 +130,7 @@ namespace ForumASPMVC.Controllers
             ViewData["TopicId"] = new SelectList(_context.Topics, "Id", "Id", threadOne.TopicId);
             return View(threadOne);
         }
-
-        // GET: ThreadOnes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.ThreadOnes == null)
-            {
-                return NotFound();
-            }
-
-            var threadOne = await _context.ThreadOnes
-                .Include(t => t.Topic)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (threadOne == null)
-            {
-                return NotFound();
-            }
-
-            return View(threadOne);
-        }
-
-        // POST: ThreadOnes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.ThreadOnes == null)
-            {
-                return Problem("Entity set 'ForumDbContext.ThreadOnes'  is null.");
-            }
-            var threadOne = await _context.ThreadOnes.FindAsync(id);
-            if (threadOne != null)
-            {
-                _context.ThreadOnes.Remove(threadOne);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+       
 
         private bool ThreadOneExists(int id)
         {

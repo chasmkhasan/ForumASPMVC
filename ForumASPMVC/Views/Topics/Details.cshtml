@@ -6,88 +6,95 @@
 
 
 
-<h1>Details</h1>
 
-<div>
-    <h4>Topic</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Created)
-        </dd>
-    </dl>
+<div class="card border-primary mb-3" style="max-width: 100%; margin-top:20px;">
+    <div class="card-header">
+        <div class="d-flex w-100 justify-content-between">
+            <h3 class="mb-1">@Html.DisplayFor(model => model.Title)</h3>
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">
+                <i class="bi bi-pencil-square"></i> &nbsp; Edit topic
+            </a>
+            
+        </div>
+    </div>
+
+
+    <div class="card-body">
+        <h6 class="card-title">@Html.DisplayFor(model => model.Description)</h6>
+        <small class="text-muted">@Html.DisplayFor(model => model.Created)</small>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a> |
-    <a asp-controller="ThreadOnes" asp-action="Create">
-        Create New Thread
+
+<div class="d-flex w-100 justify-content-between">
+    <h3 class="mb-1"></h3>
+    <a asp-controller="ThreadOnes" asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-pencil-square"></i> &nbsp; Create thread
     </a>
 </div>
 
+
+
 @if (Model.Threads != null)
 {
-    <h3>Threads</h3>
-    <table class="table" id="ThreadGrid">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Threads.FirstOrDefault().Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Threads.FirstOrDefault().Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Threads.FirstOrDefault().Text)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Threads.FirstOrDefault().Created)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Threads)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Text)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Created)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a class="Details" href="javascript:;">Show comments</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                        <a asp-action="Create" asp-controller="Replies" asp-route-id="@item.Id">Reply</a> |
-                        <a asp-action="Create" asp-controller="Comments" asp-route-id="@item.Id">Create comment</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="list-group" style="margin-top:10px">
+        @foreach (var item in Model.Threads)
+        {
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@Html.DisplayFor(modelItem => item.Title)</h5>
+                    <small>@Html.DisplayFor(modelItem => item.Created)</small>
+                </div>
+                <p class="mb-1">@Html.DisplayFor(modelItem => item.Text)</p>
+            </a>
+            <br/>
+
+            <h6>Total @item.Comments.Count() comments in this thread</h6>
+
+            <div style="padding:20px">
+                @foreach (var comment in item.Comments)
+                {   
+                    <p class="card-text" ><i class="bi bi-chat">&nbsp;&nbsp;</i>@comment.Text</p>
+                    <figcaption class="blockquote-footer">
+                        <cite title="Source Title">@comment.Created</cite>
+                        </figcaption>
+
+                    <div style="padding-left:30px; padding-right:20px; padding-bottom:10px">
+                        @foreach (var reply in comment.Replies)
+                        {                            
+                            <p class="text-body-tertiary" ><i class="bi bi-reply">&nbsp;&nbsp;</i>@reply.Text</p>
+                            <figcaption class="blockquote-footer">
+                                <cite title="Source Title">@reply.Created</cite>
+                            </figcaption>
+                        
+                        }
+
+                        <form asp-controller="Replies" asp-action="Create">
+                            <fieldset>
+                                <div class="form-group col-lg-6">
+                                    <input type="hidden" name="CommentId" asp-for="@comment.Id" />
+                                    <label for="exampleTextarea" class="form-label mt-4">Write a reply</label>
+                                    <textarea class="form-control" name="Text"  rows="5"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="margin-top:10px;">Submit</button>
+                            </fieldset>
+                        </form> 
+                    </div>
+                }
+
+                <form asp-controller="Comments" asp-action="Create">
+                    <fieldset>
+                        <div class="form-group col-lg-6">
+                            <input type="hidden" name="ThreadOneId" asp-for="@item.Id" />
+                            <label for="exampleTextarea" class="form-label mt-4">Write a comment</label>
+                            <textarea class="form-control" name="Text" rows="5"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-top:10px;">Submit</button>
+                    </fieldset>
+                </form>
+            </div>
+            
+        }
+    </div>
    
 }else
 {
