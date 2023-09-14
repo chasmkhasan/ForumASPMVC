@@ -1,5 +1,5 @@
 # Anonymt forum
-Our thinking was we will build one team project where we build a Forum. User may able to create their own subjectss (Ex. School, Sport, File, Enviornment). Under the topics user may able to create own topics under above subject. Under the Topcs users may able to start their own conversation. They may have start give comment, reply or create new topics.
+Our thinking was to build one team project where we build a Forum. User may able to create their own topics (Ex. School, Sport, File, Enviornment). Under this topics user may able to create own posts under above the subject. Under the posts users may able to start their own conversation with comment and reply. They may have start give comment, reply or create new topics.
 
 ## Structure of Project:
 |   Tasks     |   Framwork    |  Effect  |
@@ -7,8 +7,8 @@ Our thinking was we will build one team project where we build a Forum. User may
 |C#  |  ASP.Net   | wwwroot
 |MVC |  Model, View, Controller   | Fetching Data
 |Model |  Classes   | Fetching Data
-|View |  Partial View, View Model, CRUD   | Fetching Data
-|Controller |  HTTP Post, HTTP Create, HTTP Delete, HTTP Edit   | Fetching Data
+|View |  Partial View, View Model,   | Fetching Data
+|Controller |  HTTP Post, HTTP Create,  | Fetching Data
 |EF |  Entity Framework   | 
 |Database |   SQL   | LocalDatabase
 |Connection |  JSON   |  Global Datbase
