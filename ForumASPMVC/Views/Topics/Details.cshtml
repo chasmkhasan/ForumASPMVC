@@ -4,6 +4,8 @@
     ViewData["Title"] = "Details";
 }
 
+
+
 <h1>Details</h1>
 
 <div>
@@ -40,9 +42,13 @@
 
 @if (Model.Threads != null)
 {
-    <table class="table">
+    <h3>Threads</h3>
+    <table class="table" id="ThreadGrid">
         <thead>
             <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Threads.FirstOrDefault().Id)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Threads.FirstOrDefault().Title)
                 </th>
@@ -60,6 +66,9 @@
             {
                 <tr>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.Title)
                     </td>
                     <td>
@@ -70,10 +79,10 @@
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a class="Details" href="javascript:;">Show comments</a> |
                         <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
                         <a asp-action="Create" asp-controller="Replies" asp-route-id="@item.Id">Reply</a> |
-                        <a asp-action="Create" asp-controller="Comments" asp-route-id="@item.Id">Comment</a>
+                        <a asp-action="Create" asp-controller="Comments" asp-route-id="@item.Id">Create comment</a>
                     </td>
                 </tr>
             }
@@ -85,4 +94,38 @@
         <h3>There is no thread available for this topic</h3>
 }
 
+
+<div id="ThreadBox">
+
+
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://use.fontawesome.com/9da9b46707.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#ThreadGrid .Details").click(function () {
+            var currentRow = $(this).closest("tr");
+            var threadId = currentRow.find("td:eq(0)").html().trim();
+            console.log("threadId: " + threadId);
+            $.ajax({
+                type: "GET",
+                url: "/ThreadOnes/Details/" + threadId,
+                contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                success: function (response) {
+                    $('#ThreadBox').html(response);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });
+    });
+</script>
 

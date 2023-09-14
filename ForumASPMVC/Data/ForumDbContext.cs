@@ -18,6 +18,7 @@
 
 using ForumASPMVC.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace ForumASPMVC.Data
 {
@@ -34,6 +35,12 @@ namespace ForumASPMVC.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Seedig data
+            modelBuilder.Entity<Topic>().HasData(
+                new Topic { Id = 1, Title = "School", Description = "Discussion about school"},
+                new Topic { Id = 2, Title = "Film", Description = "Discussion about film" },
+                new Topic { Id = 3, Title = "Sport", Description = "Discussion about sport" });
+
             modelBuilder.Entity<ThreadOne>()
                 .HasOne(t => t.Topic)
                 .WithMany(t => t.Threads)
