@@ -20,6 +20,17 @@ Our thinking was to build one team project where we build a Forum. User may able
 |Thread, Comment, Reply | :white_check_mark:    |
 |ViewModel, PartialView, CRUD|:white_check_mark:     |
 
+## Extra Features
+  - Home Page: Create new Topics.
+  - Topics Page: Allows you to create a new topic.
+
+  - ##### Client-Side Validation: Validates form data on the client side for a better user experience.
+  - ##### Server-Side Validation: Ensures data integrity and security.
+  - ##### TempData: Displays success and error messages.
+  - ##### Partial View: Utilizes a partial view to keep code DRY (Don't Repeat Yourself).
+  - ##### Toastr Alerts: Provides user-friendly alert messages.
+
+
 ## Sample of Code Structure - CommentsController - HTTPPost
  [HttpPost]
         [ValidateAntiForgeryToken]
