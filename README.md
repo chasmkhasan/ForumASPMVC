@@ -7,8 +7,8 @@ Our thinking was to build one team project where we build a Forum. User may able
 |C#  |  ASP.Net   | wwwroot
 |MVC |  Model, View, Controller   | Fetching Data
 |Model |  Classes   | Fetching Data
-|View |  Partial View, View Model,   | Fetching Data
-|Controller |  HTTP Post, HTTP Create,  | Fetching Data
+|View |  Partial View, View Model, CRUD  | Fetching Data
+|Controller |  HTTP Post, HTTP Create, HTTP Delete, HTTP Edit | Fetching Data
 |EF |  Entity Framework   | 
 |Database |   SQL   | LocalDatabase
 |Connection |  JSON   |  Global Datbase
