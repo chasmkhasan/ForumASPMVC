@@ -70,8 +70,9 @@ namespace ForumASPMVC.Controllers
                     Created = DateTime.Now,
                 };
                 _context.Add(comment);
+                var thread = _context.ThreadOnes.Where(t => t.Id == comment.ThreadOneId).FirstOrDefault();
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", "Topics", new { id = comment.ThreadOneId });
+                return RedirectToAction("Details", "Topics", new { id = thread.TopicId });
             }
             ViewData["ThreadOneId"] = new SelectList(_context.ThreadOnes, "Id", "Id", createCommentViewModel.ThreadOneId);
             return View(createCommentViewModel);

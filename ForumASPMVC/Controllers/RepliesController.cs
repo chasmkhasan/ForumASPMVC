@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ForumASPMVC.Data;
 using ForumASPMVC.Models;
 using ForumASPMVC.Models.ViewModels;
+using NuGet.Versioning;
 
 namespace ForumASPMVC.Controllers
 {
@@ -70,8 +71,13 @@ namespace ForumASPMVC.Controllers
 
                 };
                 _context.Add(reply);
+
+                var comment = _context.Comments.Where(c => c.Id == reply.CommentId).FirstOrDefault();
+
+                var thread = _context.ThreadOnes.Where(t=>t.Id== comment.ThreadOneId).FirstOrDefault();
+
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", "Topics", new { id = reply.CommentId });
+                return RedirectToAction("Details", "Topics", new { id = thread.TopicId });
             }
             ViewData["CommentId"] = new SelectList(_context.Comments, "Id", "Id", createReplyViewModel.CommentId);
             return View(createReplyViewModel);

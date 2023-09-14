@@ -52,7 +52,7 @@ namespace ForumASPMVC.Controllers
             }
 
             var topic = await _context.Topics
-                .Where(m => m.Id == id).Include(t=>t.Threads).FirstOrDefaultAsync();
+                .Where(m => m.Id == id).Include(t=>t.Threads).ThenInclude(c=>c.Comments).ThenInclude(r=>r.Replies).FirstOrDefaultAsync();
             if (topic == null)
             {
                 return NotFound();
